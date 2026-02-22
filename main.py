@@ -208,40 +208,26 @@ tab1, tab2, tab3 = st.tabs(["📋 Full Rankings", "📊 Factor Breakdown", "🗺
 with tab1:
     for _, row in df.iterrows():
         rank = int(row["rank"])
-        badge_class = f"rank-{rank}" if rank <= 3 else "rank-other"
-        sal_color = "#4caf50" if row["salary_gap"] >= 0 else "#f85149"
+        medal = {1: "🥇", 2: "🥈", 3: "🥉"}.get(rank, f"#{rank}")
         sal_arrow = "▲" if row["salary_gap"] >= 0 else "▼"
+        sal_color = "green" if row["salary_gap"] >= 0 else "red"
 
-        # Mini bars for each factor
-        bars_html = ""
-        for fk, fm in FACTOR_META.items():
-            pct = int(row[fk])
-            bar_color = "#1f6feb" if pct > 70 else "#388bfd" if pct > 50 else "#6e7681"
-            bars_html += f"""
-            <div style="margin-bottom:6px">
-              <div class="factor-bar-label">{fm['icon']} {fm['label']}</div>
-              <div style="background:#21262d;border-radius:4px;height:6px;width:100%">
-                <div style="background:{bar_color};width:{pct}%;height:6px;border-radius:4px;transition:width 0.5s"></div>
-              </div>
-            </div>"""
+        with st.container(border=True):
+            left, right = st.columns([4, 1])
+            with left:
+                st.markdown(f"### {medal} {row['emoji']} {row['city']}")
+                st.caption(f"Avg DS Salary: ${row['avg_salary']:,}  |  :{sal_color}[{sal_arrow} ${abs(row['salary_gap']):,} vs your ${desired_salary:,} target]")
+            with right:
+                st.markdown(f"<div style='text-align:right;font-size:2rem;font-weight:700;color:#58a6ff;padding-top:8px'>{row['score']:.0f}<span style='font-size:1rem;color:#8b949e'>/100</span></div>", unsafe_allow_html=True)
 
-        st.markdown(f"""
-        <div class="city-card">
-          <div style="display:flex;align-items:center;margin-bottom:14px">
-            <span class="rank-badge {badge_class}">{rank}</span>
-            <div>
-              <span style="font-size:1.2rem;font-weight:700">{row['emoji']} {row['city']}</span>
-              <div style="font-size:0.82rem;color:#8b949e">Avg DS Salary: ${row['avg_salary']:,}</div>
-            </div>
-            <span class="score-pill">{row['score']:.0f} / 100</span>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0 24px">
-            {bars_html}
-          </div>
-          <div style="margin-top:10px;font-size:0.82rem;color:{sal_color}">
-            {sal_arrow} ${abs(row['salary_gap']):,} vs your ${desired_salary:,} target
-          </div>
-        </div>""", unsafe_allow_html=True)
+            col_a, col_b = st.columns(2)
+            factor_list = list(FACTOR_META.items())
+            for i, (fk, fm) in enumerate(factor_list):
+                pct = int(row[fk])
+                target_col = col_a if i % 2 == 0 else col_b
+                with target_col:
+                    st.caption(f"{fm['icon']} {fm['label']}")
+                    st.progress(pct / 100)
 
 with tab2:
     top_n = min(10, len(df))
