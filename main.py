@@ -142,7 +142,7 @@ weights = {
 total_weight = sum(weights.values()) or 1
 
 # ── Score Calculation ─────────────────────────────────────────────────────────
-def compute_scores(cities, weights, desired_salary):
+def compute_scores(cities, weights, desired_salary, selected_cities):
     rows = []
     for city, data in cities.items():
         if city not in selected_cities:
@@ -176,7 +176,7 @@ def compute_scores(cities, weights, desired_salary):
     df["rank"] = df.index + 1
     return df
 
-df = compute_scores(CITIES, weights, desired_salary)
+df = compute_scores(CITIES, weights, desired_salary, selected_cities)
 
 # ── Main Content ──────────────────────────────────────────────────────────────
 st.markdown('<div class="hero-title">Where Should You Work? 🏙️</div>', unsafe_allow_html=True)
