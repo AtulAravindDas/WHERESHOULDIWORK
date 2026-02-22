@@ -253,15 +253,21 @@ with tab2:
     categories = [FACTOR_META[k]["label"] for k in FACTOR_META]
     categories_closed = categories + [categories[0]]
 
-    colors_radar = ["#58a6ff", "#bc8cff", "#4caf50", "#ffd700", "#f85149"]
+    colors_radar = [
+        ("rgba(88,166,255,0.8)",  "rgba(88,166,255,0.15)"),
+        ("rgba(188,140,255,0.8)", "rgba(188,140,255,0.15)"),
+        ("rgba(76,175,80,0.8)",   "rgba(76,175,80,0.15)"),
+        ("rgba(255,215,0,0.8)",   "rgba(255,215,0,0.15)"),
+        ("rgba(248,81,73,0.8)",   "rgba(248,81,73,0.15)"),
+    ]
     for i, (_, row) in enumerate(top_df.head(5).iterrows()):
         values = [row[k] for k in FACTOR_META] + [row[list(FACTOR_META.keys())[0]]]
+        line_color, fill_color = colors_radar[i % len(colors_radar)]
         fig_radar.add_trace(go.Scatterpolar(
             r=values, theta=categories_closed,
             fill='toself', name=row["city"],
-            line=dict(color=colors_radar[i % len(colors_radar)], width=2),
-            fillcolor=colors_radar[i % len(colors_radar)].replace("#", "rgba(").replace("ff", ", 0.1)") if "#" in colors_radar[i%len(colors_radar)] else colors_radar[i%len(colors_radar)],
-            opacity=0.85
+            line=dict(color=line_color, width=2),
+            fillcolor=fill_color,
         ))
 
     fig_radar.update_layout(
