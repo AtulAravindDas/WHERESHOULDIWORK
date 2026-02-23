@@ -48,21 +48,21 @@ st.markdown("""
 
 # ── City Metadata ──────────────────────────────────────────────────────────────
 CITY_META = {
-    "New York, NY":      {"lat": 40.7128,  "lon": -74.0060,  "bls_area": "C3562000000000", "ws_city": "New York",      "ws_state": "NY", "emoji": "🗽", "nightlife": 98, "nature": 45},
-    "San Francisco, CA": {"lat": 37.7749,  "lon": -122.4194, "bls_area": "C4120000000000", "ws_city": "San Francisco", "ws_state": "CA", "emoji": "🌉", "nightlife": 75, "nature": 80},
-    "Seattle, WA":       {"lat": 47.6062,  "lon": -122.3321, "bls_area": "C4266200000000", "ws_city": "Seattle",       "ws_state": "WA", "emoji": "🌲", "nightlife": 70, "nature": 95},
-    "Austin, TX":        {"lat": 30.2672,  "lon": -97.7431,  "bls_area": "C1200200000000", "ws_city": "Austin",        "ws_state": "TX", "emoji": "🤠", "nightlife": 88, "nature": 60},
-    "Boston, MA":        {"lat": 42.3601,  "lon": -71.0589,  "bls_area": "C1149200000000", "ws_city": "Boston",        "ws_state": "MA", "emoji": "🦞", "nightlife": 72, "nature": 65},
-    "Chicago, IL":       {"lat": 41.8781,  "lon": -87.6298,  "bls_area": "C1698000000000", "ws_city": "Chicago",       "ws_state": "IL", "emoji": "🌬️", "nightlife": 85, "nature": 55},
-    "Denver, CO":        {"lat": 39.7392,  "lon": -104.9903, "bls_area": "C2007000000000", "ws_city": "Denver",        "ws_state": "CO", "emoji": "⛰️", "nightlife": 74, "nature": 97},
-    "Miami, FL":         {"lat": 25.7617,  "lon": -80.1918,  "bls_area": "C2308600000000", "ws_city": "Miami",         "ws_state": "FL", "emoji": "🌴", "nightlife": 95, "nature": 70},
-    "Washington, D.C.":  {"lat": 38.9072,  "lon": -77.0369,  "bls_area": "C4790000000000", "ws_city": "Washington",    "ws_state": "DC", "emoji": "🏛️", "nightlife": 76, "nature": 60},
-    "Los Angeles, CA":   {"lat": 34.0522,  "lon": -118.2437, "bls_area": "C3110200000000", "ws_city": "Los Angeles",   "ws_state": "CA", "emoji": "🎬", "nightlife": 90, "nature": 75},
-    "Atlanta, GA":       {"lat": 33.7490,  "lon": -84.3880,  "bls_area": "C0520000000000", "ws_city": "Atlanta",       "ws_state": "GA", "emoji": "🍑", "nightlife": 80, "nature": 58},
-    "Minneapolis, MN":   {"lat": 44.9778,  "lon": -93.2650,  "bls_area": "C3340000000000", "ws_city": "Minneapolis",   "ws_state": "MN", "emoji": "❄️", "nightlife": 60, "nature": 72},
-    "Portland, OR":      {"lat": 45.5051,  "lon": -122.6750, "bls_area": "C3890000000000", "ws_city": "Portland",      "ws_state": "OR", "emoji": "🌹", "nightlife": 72, "nature": 92},
-    "Nashville, TN":     {"lat": 36.1627,  "lon": -86.7816,  "bls_area": "C3460000000000", "ws_city": "Nashville",     "ws_state": "TN", "emoji": "🎸", "nightlife": 90, "nature": 68},
-    "Raleigh, NC":       {"lat": 35.7796,  "lon": -78.6382,  "bls_area": "C3958000000000", "ws_city": "Raleigh",       "ws_state": "NC", "emoji": "🔬", "nightlife": 62, "nature": 72},
+    "New York, NY":      {"lat": 40.7128,  "lon": -74.0060,  "bls_area": "0356200", "ws_city": "New York",      "ws_state": "NY", "emoji": "🗽", "nightlife": 98, "nature": 45},
+    "San Francisco, CA": {"lat": 37.7749,  "lon": -122.4194, "bls_area": "0412000", "ws_city": "San Francisco", "ws_state": "CA", "emoji": "🌉", "nightlife": 75, "nature": 80},
+    "Seattle, WA":       {"lat": 47.6062,  "lon": -122.3321, "bls_area": "0426620", "ws_city": "Seattle",       "ws_state": "WA", "emoji": "🌲", "nightlife": 70, "nature": 95},
+    "Austin, TX":        {"lat": 30.2672,  "lon": -97.7431,  "bls_area": "0120020", "ws_city": "Austin",        "ws_state": "TX", "emoji": "🤠", "nightlife": 88, "nature": 60},
+    "Boston, MA":        {"lat": 42.3601,  "lon": -71.0589,  "bls_area": "0114920", "ws_city": "Boston",        "ws_state": "MA", "emoji": "🦞", "nightlife": 72, "nature": 65},
+    "Chicago, IL":       {"lat": 41.8781,  "lon": -87.6298,  "bls_area": "0169800", "ws_city": "Chicago",       "ws_state": "IL", "emoji": "🌬️", "nightlife": 85, "nature": 55},
+    "Denver, CO":        {"lat": 39.7392,  "lon": -104.9903, "bls_area": "0200700", "ws_city": "Denver",        "ws_state": "CO", "emoji": "⛰️", "nightlife": 74, "nature": 97},
+    "Miami, FL":         {"lat": 25.7617,  "lon": -80.1918,  "bls_area": "0233100", "ws_city": "Miami",         "ws_state": "FL", "emoji": "🌴", "nightlife": 95, "nature": 70},
+    "Washington, D.C.":  {"lat": 38.9072,  "lon": -77.0369,  "bls_area": "0479000", "ws_city": "Washington",    "ws_state": "DC", "emoji": "🏛️", "nightlife": 76, "nature": 60},
+    "Los Angeles, CA":   {"lat": 34.0522,  "lon": -118.2437, "bls_area": "0311020", "ws_city": "Los Angeles",   "ws_state": "CA", "emoji": "🎬", "nightlife": 90, "nature": 75},
+    "Atlanta, GA":       {"lat": 33.7490,  "lon": -84.3880,  "bls_area": "0052000", "ws_city": "Atlanta",       "ws_state": "GA", "emoji": "🍑", "nightlife": 80, "nature": 58},
+    "Minneapolis, MN":   {"lat": 44.9778,  "lon": -93.2650,  "bls_area": "0334000", "ws_city": "Minneapolis",   "ws_state": "MN", "emoji": "❄️", "nightlife": 60, "nature": 72},
+    "Portland, OR":      {"lat": 45.5051,  "lon": -122.6750, "bls_area": "0389000", "ws_city": "Portland",      "ws_state": "OR", "emoji": "🌹", "nightlife": 72, "nature": 92},
+    "Nashville, TN":     {"lat": 36.1627,  "lon": -86.7816,  "bls_area": "0346000", "ws_city": "Nashville",     "ws_state": "TN", "emoji": "🎸", "nightlife": 90, "nature": 68},
+    "Raleigh, NC":       {"lat": 35.7796,  "lon": -78.6382,  "bls_area": "0394780", "ws_city": "Raleigh",       "ws_state": "NC", "emoji": "🔬", "nightlife": 62, "nature": 72},
 }
 
 JOB_SOC = {
@@ -150,10 +150,12 @@ def fetch_transit_score(lat, lon, walkscore_key):
 @st.cache_data(ttl=86400 * 30, show_spinner=False)
 def fetch_bls_salary(area_code, soc_code):
     try:
+        # Correct BLS OE series format:
+        # OE + U (unadjusted) + M (metro) + area_code(7) + industry(6=000000) + occ(6) + datatype(2=03 mean annual wage)
         soc_clean = soc_code.replace("-", "")
-        series_id = f"OEUM{area_code}{soc_clean}03"
+        series_id = f"OEUM{area_code}000000{soc_clean}03"
         url = "https://api.bls.gov/publicAPI/v1/timeseries/data/"
-        payload = {"seriesid": [series_id], "startyear": "2023", "endyear": "2024"}
+        payload = {"seriesid": [series_id], "startyear": "2022", "endyear": "2024"}
         r = requests.post(url, json=payload, timeout=10)
         data = r.json()
         series_data = data.get("Results", {}).get("series", [])
