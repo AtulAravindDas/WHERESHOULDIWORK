@@ -130,21 +130,12 @@ def fetch_weather_score(lat, lon):
         return None, False
 
 
-@st.cache_data(ttl=86400, show_spinner=False)
-def fetch_transit_score(lat, lon, walkscore_key):
-    try:
-        url = (
-            f"https://api.walkscore.com/score?format=json"
-            f"&lat={lat}&lon={lon}&transit=1"
-            f"&wsapikey={walkscore_key}"
-        )
-        r = requests.get(url, timeout=8)
-        data = r.json()
-        if data.get("status") == 1 and "transit" in data:
-            return data["transit"]["score"], True
-        return None, False
-    except Exception:
-        return None, False
+def fetch_transit_score(city):
+    """Return Walkscore Transit Score — static published data (api blocked on cloud)."""
+    score = TRANSIT_SCORES.get(city)
+    if score is not None:
+        return score, True
+    return None, False
 
 
 # Salary data for 2025/2026 — sourced from Glassdoor, Levels.fyi, Salary.com, ZipRecruiter
@@ -167,6 +158,25 @@ BLS_SALARIES = {
     "Raleigh, NC":       {"Data Scientist": 133000, "Data Analyst": 106000, "ML Engineer": 146000, "Software Engineer": 136000, "Product Manager": 150000, "Finance Analyst": 114000, "UX Designer": 108000, "Marketing Manager": 130000},
 }
 
+# Walkscore Transit Scores — published city-level scores (walkscore.com)
+TRANSIT_SCORES = {
+    "New York, NY":      89,
+    "San Francisco, CA": 80,
+    "Seattle, WA":       70,
+    "Austin, TX":        36,
+    "Boston, MA":        74,
+    "Chicago, IL":       72,
+    "Denver, CO":        44,
+    "Miami, FL":         57,
+    "Washington, D.C.":  71,
+    "Los Angeles, CA":   53,
+    "Atlanta, GA":       48,
+    "Minneapolis, MN":   50,
+    "Portland, OR":      51,
+    "Nashville, TN":     27,
+    "Raleigh, NC":       28,
+}
+
 def fetch_bls_salary(city, role):
     """Return BLS OEWS May 2024 annual mean wage — static data, API blocked on cloud."""
     salary = BLS_SALARIES.get(city, {}).get(role)
@@ -182,12 +192,6 @@ with st.sidebar:
     role = st.selectbox("Job Title", list(JOB_SOC.keys()), index=0)
     desired_salary = st.number_input("Target Salary ($)", min_value=50000, max_value=300000,
                                       value=115000, step=5000, format="%d")
-
-    st.markdown('<div class="section-header">API Keys</div>', unsafe_allow_html=True)
-    walkscore_key = st.text_input(
-        "🔑 Walkscore API Key", type="password",
-        placeholder="Free key → walkscore.com/professional/api.php"
-    )
 
     st.markdown('<div class="section-header">Factor Weights</div>', unsafe_allow_html=True)
     st.caption("Slide to prioritize what matters most to you")
@@ -238,15 +242,11 @@ with st.spinner("⚡ Fetching live data from Open-Meteo, BLS & Walkscore..."):
         entry["weather_live"] = w_ok
         if w_ok: status["weather"] += 1
 
-        # Transit — Walkscore (needs key)
-        if walkscore_key:
-            t_score, t_ok = fetch_transit_score(meta["lat"], meta["lon"], walkscore_key)
-            entry["transit"]      = t_score if t_ok else fb["transit"]
-            entry["transit_live"] = t_ok
-            if t_ok: status["transit"] += 1
-        else:
-            entry["transit"]      = fb["transit"]
-            entry["transit_live"] = False
+        # Transit — Walkscore static scores
+        t_score, t_ok = fetch_transit_score(city)
+        entry["transit"]      = t_score if t_ok else fb["transit"]
+        entry["transit_live"] = t_ok
+        if t_ok: status["transit"] += 1
 
         # Salary — BLS OEWS
         salary, s_ok = fetch_bls_salary(city, role)
@@ -301,7 +301,7 @@ n = len(selected_cities)
 c1, c2, c3, c4 = st.columns(4)
 c1.metric("🌤️ Weather",      f"{status['weather']}/{n} live",  "Open-Meteo")
 c2.metric("💼 Salaries",     f"{status['salary']}/{n} live",   "BLS OEWS")
-c3.metric("🚇 Transit",      f"{status['transit']}/{n} live",  "Walkscore" if walkscore_key else "Add key →")
+c3.metric("🚇 Transit",      f"{status['transit']}/{n} live",  "Walkscore")
 c4.metric("💰 Cost of Living", "Curated index", "Numbeo-based")
 
 st.markdown("<br>", unsafe_allow_html=True)
@@ -428,7 +428,7 @@ st.markdown(
     '<div style="color:#8b949e;font-size:0.8rem;text-align:center">'
     '🌤 Weather: <a href="https://open-meteo.com" style="color:#58a6ff">Open-Meteo</a> (30-day avg) &nbsp;|&nbsp; '
     '💼 Salaries: <a href="https://www.glassdoor.com" style="color:#58a6ff">Glassdoor / Levels.fyi 2025–26</a> &nbsp;|&nbsp; '
-    '🚇 Transit: <a href="https://www.walkscore.com" style="color:#58a6ff">Walkscore</a> &nbsp;|&nbsp; '
+    '🚇 Transit: <a href="https://www.walkscore.com" style="color:#58a6ff">Walkscore city scores</a> &nbsp;|&nbsp; '
     '💰 Cost of Living: Curated index'
     '</div>',
     unsafe_allow_html=True
